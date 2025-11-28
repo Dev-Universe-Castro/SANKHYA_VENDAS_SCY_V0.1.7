@@ -30,7 +30,7 @@ if (missingVars.length > 0) {
 
 module.exports = {
   apps : [{
-    name: "SankhyaVendas",
+    name: "SankhyaSincronizadorVendas",
     // Aponta para o servidor otimizado (Standalone)
     script: ".next/standalone/server.js",
     instances: 1,
