@@ -10,10 +10,13 @@ if (fs.existsSync(envPath)) {
   console.log('⚠️ Arquivo .env.local não encontrado, usando variáveis do sistema');
 }
 
+// Carrega as variáveis do arquivo local para memória
+require('dotenv').config({ path: path.join(__dirname, 'config.env.local') });
+
 // Validar variáveis críticas
 const requiredVars = [
   'SANKHYA_TOKEN',
-  'SANKHYA_APPKEY', 
+  'SANKHYA_APPKEY',
   'SANKHYA_USERNAME',
   'SANKHYA_PASSWORD'
 ];
@@ -28,22 +31,33 @@ if (missingVars.length > 0) {
 module.exports = {
   apps : [{
     name: "SankhyaVendas",
-    script: "node_modules/next/dist/bin/next",
-    args: "start -p 5000 -H 0.0.0.0",
+    // Aponta para o servidor otimizado (Standalone)
+    script: ".next/standalone/server.js",
     instances: 1,
     exec_mode: "fork",
     watch: false,
     env: {
       NODE_ENV: "production",
+      PORT: 4000,
+      HOSTNAME: "0.0.0.0",
+
+      // === CORREÇÃO CRÍTICA (Conexão Local) ===
+      // Define explicitamente localhost para evitar sair pelo firewall e ser bloqueado
+      ORACLE_CONNECT_STRING: "localhost:1521/FREEPDB1",
+
+      // Credenciais do Banco
+      ORACLE_USER: process.env.ORACLE_USER || "SYSTEM",
+      ORACLE_PASSWORD: process.env.ORACLE_PASSWORD, // Pega do config.env.local
+
+      // Variáveis da API Sankhya e IA
       SANKHYA_TOKEN: process.env.SANKHYA_TOKEN,
       SANKHYA_APPKEY: process.env.SANKHYA_APPKEY,
       SANKHYA_USERNAME: process.env.SANKHYA_USERNAME,
       SANKHYA_PASSWORD: process.env.SANKHYA_PASSWORD,
       GEMINI_API_KEY: process.env.GEMINI_API_KEY,
-      ORACLE_USER: process.env.ORACLE_USER,
-      ORACLE_PASSWORD: process.env.ORACLE_PASSWORD,
-      ORACLE_CONNECT_STRING: process.env.ORACLE_CONNECT_STRING,
-      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL_URL
+
+      // URL do Site
+      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL
     }
   }]
 };
