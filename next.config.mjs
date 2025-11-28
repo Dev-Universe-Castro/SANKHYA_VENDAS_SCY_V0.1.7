@@ -52,13 +52,13 @@ const nextConfig = {
     return config;
   },
   env: {
-    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_SITE_URL || 'http://crescimentoerp.nuvemdatacom.com.br:5000',
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_SITE_URL || 'http://crescimentoerp.nuvemdatacom.com.br:4000',
     SANKHYA_TOKEN: process.env.SANKHYA_TOKEN,
     SANKHYA_APPKEY: process.env.SANKHYA_APPKEY,
     SANKHYA_USERNAME: process.env.SANKHYA_USERNAME,
     SANKHYA_PASSWORD: process.env.SANKHYA_PASSWORD,
     GEMINI_API_KEY: process.env.GEMINI_API_KEY,
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'http://crescimentoerp.nuvemdatacom.com.br:5000'
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'http://crescimentoerp.nuvemdatacom.com.br:4000'
   },
   // Garantir que as URLs sejam geradas corretamente
   trailingSlash: false,
